@@ -9,12 +9,14 @@
 <body ng-controller="ListaTelefonicaController">
     <main>
         <h3>{{title}}</h3>
+        <input type="text" placeholder="O que você está procurando ?" name="campoBusca" ng-model="campoBusca" >
+
         <div>
             <ul class="erro">
                 <li ng-show="contatosForm.nome.$error.required && contatosForm.nome.$dirty" class="msg-erro">Por favor preencha o campo nome </li>
                 <li ng-show="contatosForm.nome.$error.minlength" class="msg-erro">O campo nome deve ter pelo menos 10 letras </li>
-                <li ng-show="contatosForm.telefone.$error.required && contatosForm.nome.$dirty" class="msg-erro">Por favor preencha o campo telefone </li>
-                <li ng-show="contatosForm.telefone.$error.minlength" class="msg-erro">O campo telefone deve ter pelo menos 8 numeros </li>
+                <li ng-show="contatosForm.telefone.$error.required && contatosForm.telefone.$dirty" class="msg-erro">Por favor preencha o campo telefone </li>
+                <li ng-show="contatosForm.telefone.$error.minlength" class="msg-erro">O campo telefone deve ter 13 numeros </li>
                 <li ng-show="contatosForm.telefone.$error.pattern" class="msg-erro">O campo telefone deve estar no formato dd ddddd-dddd</li>
             </ul>
         </div>
@@ -22,21 +24,22 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Nome</th>
-                    <th>Telefone</th>
+                    <th><a href="" ng-click="ordenarPor('nome')" >Nome</a></th>
+                    <th><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
                     <th>Operadora</th>
+                    <th>Data de cadastro</th>
                     <th>Cor</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-class="{selecionado : c.selecionado}" ng-repeat="c in contatos">
+                <tr ng-class="{selecionado : c.selecionado}" ng-repeat="c in contatos | filter : {nome : campoBusca} | orderBy:criterio:ordem">
                     <td><input type="checkbox" ng-model="c.selecionado"/></td>
-                    <td>{{c.nome}}</td>
+                    <td>{{c.nome | uppercase}}</td>
                     <td>{{c.telefone}}</td>
                     <td>{{c.op.nome}}</td>
-                    <td><div ng-style="{'width' : '20px', 'height' : '20px', 'background-color' : c.cor}" ></div></td>
-                </tr>
-               
+                    <th>{{c.data | date : 'dd/MM/yyyy' }}</th>
+                    <td><div ng-style="{'width' : '20px', 'height' : '20px', 'background-color' : c.cor}" ></div></td>                    
+                </tr>               
             </tbody>
         </table>
         <div class="campos">
@@ -45,13 +48,12 @@
                 <input type="text" ng-required = "true" ng-minlength="10" ng-model= "contato.nome" name="nome" placeholder="David Chaves Ferreira">
                 
                 <label for="">Telefone</label>
-                <input type="text" ng-required = "true" ng-minlength="8"  ng-pattern="/^\d{2}\s\d{4,5}-\d{4}$/" ng-model= "contato.telefone" name="telefone" placeholder="(16)-99760-9338">    
+                <input type="text" ng-required = "true" ng-minlength="13"  ng-pattern="/^\d{2}\s\d{4,5}-\d{4}$/" ng-model= "contato.telefone" name="telefone" placeholder="16 99760-9338">    
                 
                 <label for="">Operadora</label>
-                <select name="" id="" ng-model="contato.op" ng-options="operadora.nome for operadora in operadoras">
+                <select name="" id="" ng-model="contato.op" ng-options="operadora.nome for operadora in operadoras | orderBy:'nome'">
                     <option value="">Selecione uma operadora</option>
                 </select>
-                
                 <label for="">Cor</label>
                 <input type="color" ng-model= "contato.cor">    
             </form>
@@ -61,6 +63,7 @@
             <button ng-click="apagar(contatos)"  >
                 Apagar
             </button>
+            {{"olaolaola" | limitTo:4}}
         </div>
     </main>
     <script src="./angular/angular.js"></script>
