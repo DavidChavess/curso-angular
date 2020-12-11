@@ -9,6 +9,15 @@
 <body ng-controller="ListaTelefonicaController">
     <main>
         <h3>{{title}}</h3>
+        <div>
+            <ul class="erro">
+                <li ng-show="contatosForm.nome.$error.required && contatosForm.nome.$dirty" class="msg-erro">Por favor preencha o campo nome </li>
+                <li ng-show="contatosForm.nome.$error.minlength" class="msg-erro">O campo nome deve ter pelo menos 10 letras </li>
+                <li ng-show="contatosForm.telefone.$error.required && contatosForm.nome.$dirty" class="msg-erro">Por favor preencha o campo telefone </li>
+                <li ng-show="contatosForm.telefone.$error.minlength" class="msg-erro">O campo telefone deve ter pelo menos 8 numeros </li>
+                <li ng-show="contatosForm.telefone.$error.pattern" class="msg-erro">O campo telefone deve estar no formato dd ddddd-dddd</li>
+            </ul>
+        </div>
         <table ng-if="contatos.length > 0">
             <thead>
                 <tr>
@@ -31,13 +40,22 @@
             </tbody>
         </table>
         <div class="campos">
-            <input type="text"  ng-model= "contato.nome" placeholder="Nome">
-            <input type="text"  ng-model= "contato.telefone" placeholder="Telefone">    
-            <select name="" id="" ng-model="contato.op" ng-options="operadora.nome for operadora in operadoras">
-                <option value="">Selecione uma operadora</option>
-            </select>
-            
-            <button  ng-click="add(contato)" ng-disabled=" !contato.nome || !contato.telefone || !contato.op">
+            <form name="contatosForm" action="">
+                <label for="">Nome</label>
+                <input type="text" ng-required = "true" ng-minlength="10" ng-model= "contato.nome" name="nome" placeholder="David Chaves Ferreira">
+                
+                <label for="">Telefone</label>
+                <input type="text" ng-required = "true" ng-minlength="8"  ng-pattern="/^\d{2}\s\d{4,5}-\d{4}$/" ng-model= "contato.telefone" name="telefone" placeholder="(16)-99760-9338">    
+                
+                <label for="">Operadora</label>
+                <select name="" id="" ng-model="contato.op" ng-options="operadora.nome for operadora in operadoras">
+                    <option value="">Selecione uma operadora</option>
+                </select>
+                
+                <label for="">Cor</label>
+                <input type="color" ng-model= "contato.cor">    
+            </form>
+            <button  ng-click="add(contato)" ng-disabled="contatosForm.$invalid">
                 Adicionar
             </button>
             <button ng-click="apagar(contatos)"  >

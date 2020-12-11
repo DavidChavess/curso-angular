@@ -17,6 +17,7 @@ angular.module("listaTelefonica").controller("ListaTelefonicaController", ($scop
     $scope.add = (contato) => {
         $scope.contatos.push(contato);
         delete $scope.contato;
+        $scope.contatosForm.$setPristine();
     }
 
     $scope.apagar = (contato) => {
