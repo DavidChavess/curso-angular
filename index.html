@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="listaTelefonica" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Lista telefônica</title>
+</head>
+<body ng-controller="ListaTelefonicaController">
+    <main>
+        <h3>{{title}}</h3>
+        <table ng-if="contatos.length > 0">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Operadora</th>
+                    <th>Cor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-class="{selecionado : c.selecionado}" ng-repeat="c in contatos">
+                    <td><input type="checkbox" ng-model="c.selecionado"/></td>
+                    <td>{{c.nome}}</td>
+                    <td>{{c.telefone}}</td>
+                    <td>{{c.op.nome}}</td>
+                    <td><div ng-style="{'width' : '20px', 'height' : '20px', 'background-color' : c.cor}" ></div></td>
+                </tr>
+               
+            </tbody>
+        </table>
+        <div class="campos">
+            <input type="text"  ng-model= "contato.nome" placeholder="Nome">
+            <input type="text"  ng-model= "contato.telefone" placeholder="Telefone">    
+            <select name="" id="" ng-model="contato.op" ng-options="operadora.nome for operadora in operadoras">
+                <option value="">Selecione uma operadora</option>
+            </select>
+            
+            <button  ng-click="add(contato)" ng-disabled=" !contato.nome || !contato.telefone || !contato.op">
+                Adicionar
+            </button>
+            <button ng-click="apagar(contatos)"  >
+                Apagar
+            </button>
+        </div>
+    </main>
+    <script src="./angular/angular.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>
