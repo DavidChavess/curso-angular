@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/ui-style.css">
     <title>Lista telefônica</title>
 </head>
 <body ng-controller="ListaTelefonicaController">
     <main>
         <h3>{{title}}</h3>
+        {{contato.data}}
         <input type="text" placeholder="O que você está procurando ?" name="campoBusca" ng-model="campoBusca" >
 
         <div>
@@ -47,6 +49,9 @@
                 <label for="">Nome</label>
                 <input type="text" ng-required = "true" ng-minlength="10" ng-model= "contato.nome" name="nome" placeholder="David Chaves Ferreira">
                 
+                <label for="">Data</label>
+                <input type="text" ng-model= "contato.data" name="data" ui-date >
+                
                 <label for="">Telefone</label>
                 <input type="text" ng-required = "true" ng-minlength="13"  ng-pattern="/^\d{2}\s\d{4,5}-\d{4}$/" ng-model= "contato.telefone" name="telefone" placeholder="16 99760-9338">    
                 
@@ -72,5 +77,7 @@
     <script src="./js/utils/ConfigValue.js"></script>
     <script src="./js/filter/NameFilter.js" ></script>
     <script src="./js/filter/Abv.js" ></script>
+    <script src="./js/directives/UiAlertDirective.js"></script>
+    <script src="./js/directives/UiDateDirective.js"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@ angular.module("listaTelefonica").controller("ListaTelefonicaController", ($scop
             $scope.contatos = res.data;
         })
         .catch(err => {
-            console.log(err)
+            $scope.erro = "Não foi possivel carregar os dados";
         })
     }
 
