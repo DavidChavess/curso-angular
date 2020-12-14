@@ -1,18 +1,12 @@
 angular.module("listaTelefonica", []);
-angular.module("listaTelefonica").controller("ListaTelefonicaController", ($scope, $http)=>{
+angular.module("listaTelefonica").controller("ListaTelefonicaController", ($scope, apiService )=>{
     $scope.title = "Lista telefônica";
     $scope.contatos = [];
-    $scope.operadoras = [
-        { nome : "TIM"},
-        { nome : "VIVO"},
-        { nome : "OI"},
-        { nome : "GNV"},
-        { nome : "EMBRATEL"}
-    ];
+    $scope.operadoras = OperadoraService.getOperadoras();
 
     function carregarContatos(){
-        $http.get("http://localhost:8080/api/contatos")
-        .then(res => {
+        
+        apiService.getContatos().then(res => {
             $scope.contatos = res.data;
         })
         .catch(err => {
@@ -23,7 +17,7 @@ angular.module("listaTelefonica").controller("ListaTelefonicaController", ($scop
     $scope.add = (contato) => {
         contato.operadora = contato.nomeOperadora.nome;
 
-        $http.post("http://localhost:8080/api/contatos", contato)
+        apiService.saveContato(contato)
         .then(res => {
             $scope.contatos.push(res.data);
             delete $scope.contato;
@@ -37,7 +31,7 @@ angular.module("listaTelefonica").controller("ListaTelefonicaController", ($scop
 
     $scope.apagar = (contato) => {
         contato.filter(c => c.selecionado).forEach(c => {
-            $http.delete(`http://localhost:8080/api/contatos/${c.id}`)
+            apiService.deleteContato(c.id)
             .then(res => {
                carregarContatos();
             })
@@ -46,6 +40,7 @@ angular.module("listaTelefonica").controller("ListaTelefonicaController", ($scop
             })      
         });
     }
+
     $scope.ordenarPor = (ordenacao) => {
         $scope.criterio = ordenacao;
         $scope.ordem = !$scope.ordem;  
