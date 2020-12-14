@@ -34,7 +34,7 @@
             <tbody>
                 <tr ng-class="{selecionado : c.selecionado}" ng-repeat="c in contatos | filter : {nome : campoBusca} | orderBy:criterio:ordem">
                     <td><input type="checkbox" ng-model="c.selecionado"/></td>
-                    <td>{{c.nome | uppercase}}</td>
+                    <td>{{c.nome | name | abv:5 }}</td>
                     <td>{{c.telefone}}</td>
                     <td>{{c.nomeOperadora}}</td>
                     <th>{{c.data | date : 'dd/MM/yyyy' }}</th>
@@ -70,5 +70,7 @@
     <script src="./js/controller/ContatosController.js"></script>
     <script src="./js/service/ApiService.js"></script>
     <script src="./js/utils/ConfigValue.js"></script>
+    <script src="./js/filter/NameFilter.js" ></script>
+    <script src="./js/filter/Abv.js" ></script>
 </body>
 </html>

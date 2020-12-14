@@ -1,4 +1,5 @@
 angular.module("listaTelefonica", []);
+
 angular.module("listaTelefonica").controller("ListaTelefonicaController", ($scope, apiService )=>{
     $scope.title = "Lista telefônica";
     $scope.contatos = [];
