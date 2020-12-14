@@ -36,7 +36,7 @@
                     <td><input type="checkbox" ng-model="c.selecionado"/></td>
                     <td>{{c.nome | uppercase}}</td>
                     <td>{{c.telefone}}</td>
-                    <td>{{c.op.nome}}</td>
+                    <td>{{c.nomeOperadora}}</td>
                     <th>{{c.data | date : 'dd/MM/yyyy' }}</th>
                     <td><div ng-style="{'width' : '20px', 'height' : '20px', 'background-color' : c.cor}" ></div></td>                    
                 </tr>               
@@ -51,7 +51,7 @@
                 <input type="text" ng-required = "true" ng-minlength="13"  ng-pattern="/^\d{2}\s\d{4,5}-\d{4}$/" ng-model= "contato.telefone" name="telefone" placeholder="16 99760-9338">    
                 
                 <label for="">Operadora</label>
-                <select name="" id="" ng-model="contato.op" ng-options="operadora.nome for operadora in operadoras | orderBy:'nome'">
+                <select name="" id="" ng-model="contato.nomeOperadora" ng-options="operadora.nome for operadora in operadoras | orderBy:'nome'">
                     <option value="">Selecione uma operadora</option>
                 </select>
                 <label for="">Cor</label>
@@ -63,7 +63,6 @@
             <button ng-click="apagar(contatos)"  >
                 Apagar
             </button>
-            {{"olaolaola" | limitTo:4}}
         </div>
     </main>
     <script src="./angular/angular.js"></script>
